@@ -1,0 +1,118 @@
+#include <iostream>
+#include <conio.h>
+#include <string>
+#include <windows.h>
+
+using namespace std;
+
+int wiu,x,y;
+char kata[10], temp[10];
+
+struct mahasiswa
+{
+    char nama[50];
+    char jurusan[50];
+    char kelamin;
+    double nilai1;
+    double nilai2;
+    double nilai3;
+    double rata;
+    int nim;
+};
+
+mahasiswa mhs[999];
+
+void isi()
+{
+    cout<<"Banyak data yang ingin diisi : ";
+    cin>>wiu;
+    for (x=0;x<wiu;x++)
+    {
+        cout<<"NIM (3digit): ";
+        cin>>mhs[x].nim;
+        cout<<"Nama    : ";
+        cin>>mhs[x].nama;
+        cout<<"Jenis Kelamin(L/P)  : ";
+        cin>>mhs[x].kelamin;
+        cout<<"Jurusan    : ";
+        cin>>mhs[x].jurusan;
+        cout<<"Nilai Harian 1   : ";
+        cin>>mhs[x].nilai1;
+        cout<<"Nilai Harian 2   : ";
+        cin>>mhs[x].nilai2;
+        cout<<"Nilai Harian 3   : ";
+        cin>>mhs[x].nilai3;
+        cout<<"======================"<<endl;
+    }
+}
+
+void sorting()
+{
+    system("cls");
+    for (x=0;x<wiu;x++)
+    {
+        for (y=x+1;y<wiu;y++)
+        {
+            if (mhs[x].rata<mhs[y].rata)
+            {
+                mahasiswa temp;
+                temp=mhs[x];
+                mhs[x]=mhs[y];
+                mhs[y]=temp;
+            }
+        }
+    }
+    system("cls");
+    cout<<"======================================================================="<<endl;
+    cout<<"NIM      NAMA    JENIS    JURUSAN   NILAI 1 NILAI 2 NILAI 3      RATA- "<<endl;
+    cout<<"                 KELAMIN                                         RATA  "<<endl;
+    cout<<"======================================================================="<<endl;
+    for (x=0;x<wiu;x++)
+    {
+        mhs[x].rata=(mhs[x].nilai1+mhs[x].nilai2+mhs[x].nilai3)/3;
+        cout<<mhs[x].nim<<"      "<<mhs[x].nama<<"     "<<mhs[x].kelamin<<"        "<<mhs[x].jurusan<<"       "<<mhs[x].nilai1<<"       "<<mhs[x].nilai2<<"        "<<mhs[x].nilai3<<"           "<<mhs[x].rata<<endl;
+    }
+    cout<<"======================================================================="<<endl;
+}
+
+void searching()
+{
+    system("cls");
+    cout<<"Cari NIM : ";
+    cin>>kata;
+    int kiri=0,kanan=wiu-1,tengah;
+    tengah=(kiri+kanan)/2;
+    for (int x=0;x<wiu;x++)
+    {
+        if(kata==mhs[x].nim)
+        {
+            cout<<"Data Ditemukan"<<kata;
+            cout<<"NIM   : \n"<<mhs[x].nim;
+        }
+        else
+        {
+            cout<<"Data Tidak Ada"<<x+1;
+        }
+    }
+    getch();
+}
+
+int main()
+{
+    menu:
+    int pilih;
+    cout<<"1. Input data mahasiswa"<<endl;
+    cout<<"2. Tampil berdasarkan Nilai Rata-rata Tertinggi"<<endl;
+    cout<<"3. Pencarian Berdasarkan NIM"<<endl;
+    cout<<"0. Keluar"<<endl;
+    cout<<"Pilih    : ";
+    cin>>pilih;
+    system("cls");
+    switch(pilih)
+    {
+        case 1:isi();getch();system("cls");goto menu;break;
+        case 2:sorting();getch();system("cls");goto menu;break;
+        case 3:searching();getch();system("cls");goto menu;break;
+        case 0:break;
+    }
+}
